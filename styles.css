@@ -13,7 +13,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #000; /* Черный фон для контраста */
+  background: linear-gradient(45deg, #3f0043, #230058);
 }
 
 /* Настраиваем канвас */
@@ -29,10 +29,9 @@ canvas {
   top: 0;
   width: 300px;
   height: 100%;
-  background-color: #333;
+  background-color: #100028;
   color: #fff;
   transition: right 0.3s ease;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   padding: 20px;
 }
 
@@ -46,7 +45,9 @@ canvas {
   top: 0px;
   height: 100%;
   width: 50px;
-  background-color: #f81a1a;
+  border: none;
+  color: #fff;
+  background: linear-gradient(90deg, #67006f, #100028);
 }
 
 .raw {

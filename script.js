@@ -2,6 +2,19 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 const H_LINE_TITLE = 500; //уровень названия
+let H_GRAD = 250; //размер градиента
+let RGB_GRAD = [50, 50, 50]; //цвет градиента
+
+let X_IMG = 0;
+let Y_IMG = 0;
+let H_IMG = 200;
+let W_IMG = 500;
+
+let IS_DRAG = false;
+let X_DOWN = 0;
+let Y_DOWN = 0;
+let X_BIMG = 0;
+let Y_BIMG = 0;
 
 document.getElementById("toggleButton").addEventListener("click", () => {
   const sidebar = document.getElementById("sidebar");
@@ -12,19 +25,28 @@ document.getElementById("toggleButton").addEventListener("click", () => {
   }
 });
 
-// Заливаем весь канвас цветом
-ctx.fillStyle = "#4CAF50";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+const img = new Image();
+img.src = "./images/image_poetry.png";
 
-// Рисуем текст в центре
-ctx.fillStyle = "white";
-ctx.font = "100px Arial";
-ctx.textAlign = "center";
-ctx.textBaseline = "middle";
-ctx.fillText("Hello Canvas!", canvas.width / 2, canvas.height / 2);
+img.onload = () => {
+  updateCanvas();
+};
 
-drawGradient(ctx, [canvas.width, canvas.height], [255, 128, 50], 250);
-drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
+function clearCanvas(ctx) {
+  ctx.fillStyle = "#4CAF50";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function updateCanvas() {
+  clearCanvas(ctx);
+  drawImage(ctx, img);
+  drawGradient(ctx, [canvas.width, canvas.height], RGB_GRAD, H_GRAD);
+  drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
+}
+
+function drawImage(ctx, img) {
+  ctx.drawImage(img, X_IMG, Y_IMG, W_IMG, H_IMG);
+}
 
 function drawGradient(ctx, canvSize, RGB, H) {
   [R, G, B] = RGB;
@@ -59,3 +81,104 @@ function drawRoundedRect(ctx, canvSize, radius, strokeWidth) {
   ctx.arcTo(x, y, x + width, y, rad); // Верхний левый угол
   ctx.stroke();
 }
+
+// Функция для обработки координат
+function getCoordinates(event) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  let clientX, clientY;
+
+  if (event.touches) {
+    const touch = event.touches[0];
+    clientX = touch.clientX;
+    clientY = touch.clientY;
+  } else {
+    clientX = event.clientX;
+    clientY = event.clientY;
+  }
+
+  const x = (clientX - rect.left) * scaleX;
+  const y = (clientY - rect.top) * scaleY;
+
+  return { x, y };
+}
+
+// Обработчики событий
+canvas.addEventListener("mousemove", (event) => {
+  const coords = getCoordinates(event);
+  if (IS_DRAG) {
+    //console.log("Mouse move:", coords);
+    //console.log(`X_BIMG = ${X_BIMG}, Y_BIMG = ${Y_BIMG}`);
+    //console.log(`X_DOWN = ${X_DOWN}, Y_DOWN = ${Y_DOWN}`);
+    X_IMG = X_BIMG + coords.x - X_DOWN;
+    Y_IMG = Y_BIMG + coords.y - Y_DOWN;
+    updateCanvas();
+  }
+});
+
+canvas.addEventListener("mousedown", (event) => {
+  const coords = getCoordinates(event);
+
+  if (
+    coords.x - X_IMG > 0 &&
+    coords.x - X_IMG < W_IMG &&
+    coords.y - Y_IMG > 0 &&
+    coords.y - Y_IMG < H_IMG
+  ) {
+    X_BIMG = X_IMG;
+    Y_BIMG = Y_IMG;
+    X_DOWN = coords.x;
+    Y_DOWN = coords.y;
+    IS_DRAG = true;
+
+    //console.log("Mouse down:", coords);
+    //console.log(`X_BIMG = ${X_BIMG}, Y_BIMG = ${Y_BIMG}`);
+    //console.log(`X_DOWN = ${X_DOWN}, Y_DOWN = ${Y_DOWN}`);
+  }
+});
+
+canvas.addEventListener("mouseup", (event) => {
+  const coords = getCoordinates(event);
+  IS_DRAG = false;
+  //console.log("Mouse up:", coords);
+  //console.log(`X_IMG = ${X_IMG}, Y_IMG = ${Y_IMG}`);
+});
+
+canvas.addEventListener("touchstart", (event) => {
+  const coords = getCoordinates(event);
+  if (
+    coords.x - X_IMG > 0 &&
+    coords.x - X_IMG < W_IMG &&
+    coords.y - Y_IMG > 0 &&
+    coords.y - Y_IMG < H_IMG
+  ) {
+    X_BIMG = X_IMG;
+    Y_BIMG = Y_IMG;
+    X_DOWN = coords.x;
+    Y_DOWN = coords.y;
+    IS_DRAG = true;
+
+    //console.log("Touch start:", coords);
+    //console.log(`X_BIMG = ${X_BIMG}, Y_BIMG = ${Y_BIMG}`);
+    //console.log(`X_DOWN = ${X_DOWN}, Y_DOWN = ${Y_DOWN}`);
+  }
+});
+
+canvas.addEventListener("touchmove", (event) => {
+  const coords = getCoordinates(event);
+  if (IS_DRAG) {
+    //console.log("Touch move:", coords);
+    //console.log(`X_BIMG = ${X_BIMG}, Y_BIMG = ${Y_BIMG}`);
+    //console.log(`X_DOWN = ${X_DOWN}, Y_DOWN = ${Y_DOWN}`);
+    X_IMG = X_BIMG + coords.x - X_DOWN;
+    Y_IMG = Y_BIMG + coords.y - Y_DOWN;
+    updateCanvas();
+  }
+});
+
+canvas.addEventListener("touchend", (event) => {
+  IS_DRAG = false;
+  console.log("Touch end");
+});

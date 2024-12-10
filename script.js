@@ -1,6 +1,8 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+const H_LINE_TITLE = 500; //уровень названия
+
 document.getElementById("toggleButton").addEventListener("click", () => {
   const sidebar = document.getElementById("sidebar");
   if (sidebar.style.right === "0px") {
@@ -21,7 +23,25 @@ ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 ctx.fillText("Hello Canvas!", canvas.width / 2, canvas.height / 2);
 
+drawGradient(ctx, [canvas.width, canvas.height], [255, 128, 50], 250);
 drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
+
+function drawGradient(ctx, canvSize, RGB, H) {
+  [R, G, B] = RGB;
+  [width, height] = canvSize;
+
+  const gradient = ctx.createLinearGradient(
+    0,
+    H_LINE_TITLE,
+    0,
+    H_LINE_TITLE - H
+  );
+  gradient.addColorStop(0, `rgb(${R},${G},${B},1)`);
+  gradient.addColorStop(1, `rgb(${R},${G},${B},0)`);
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+}
 
 function drawRoundedRect(ctx, canvSize, radius, strokeWidth) {
   let x = 0;

@@ -1,0 +1,65 @@
+/* Убираем все отступы */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Центрируем содержимое на странице */
+html,
+body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #000; /* Черный фон для контраста */
+}
+
+/* Настраиваем канвас */
+canvas {
+  height: 100vh; /* Высота экрана */
+  width: auto; /* Пропорциональная ширина */
+  display: block;
+}
+
+.sidebar {
+  position: fixed;
+  right: -250px;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #333;
+  color: #fff;
+  transition: right 0.3s ease;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.sidebar .content {
+  padding: 20px;
+}
+
+#toggleButton {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: 50px;
+  background-color: #f81a1a;
+}
+
+.raw {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}

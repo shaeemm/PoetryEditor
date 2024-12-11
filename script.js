@@ -4,20 +4,22 @@ const ctx = canvas.getContext("2d");
 const sliderHightCanvas = document.getElementById("sliderHightCanvas");
 const sliderScaleImage = document.getElementById("sliderScaleImage");
 const imageInput = document.getElementById("imageInput");
+const colorPicker = document.getElementById("colorPicker");
+const sliderHightGradient = document.getElementById("sliderHightGradient");
 
 const BASE_CANVAS_HIGHT = 1920;
 
 const H_LINE_TITLE = 500; //уровень названия
-let H_GRAD = 250; //размер градиента
-let RGB_GRAD = [50, 50, 50]; //цвет градиента
+let H_GRAD = parseInt(sliderHightGradient.value); //размер градиента
+let RGB_GRAD = [0, 0, 0]; //цвет градиента
 
-let X_IMG = 28;
-let Y_IMG = 20;
+let X_IMG = 28; //положение картинки
+let Y_IMG = 20; //положение картинки
 let NAT_H_IMG = 200;
 let NAT_W_IMG = 500;
 let H_IMG = 200;
 let W_IMG = 500;
-let SCALE_IMG = parseFloat(sliderScaleImage.value);
+let SCALE_IMG = parseFloat(sliderScaleImage.value); //масштаб картинки
 
 let IS_DRAG = false;
 let X_DOWN = 0;
@@ -117,6 +119,15 @@ function getCoordinates(event) {
   const y = (clientY - rect.top) * scaleY;
 
   return { x, y };
+}
+
+function hexToRgb(hex) {
+  hex = hex.replace("#", "");
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return { r, g, b };
 }
 
 // Обработчики событий
@@ -238,4 +249,17 @@ imageInput.addEventListener("change", (event) => {
     console.error("Выбран файл не является изображением");
   }
   updateCanvas();
+});
+
+sliderHightGradient.addEventListener("input", (event) => {
+  H_GRAD = parseInt(event.target.value);
+  updateCanvas();
+});
+
+colorPicker.addEventListener("input", (event) => {
+  hexColor = event.target.value;
+  let rgb = hexToRgb(hexColor);
+  RGB_GRAD = [rgb.r, rgb.g, rgb.b];
+  updateCanvas();
+  //console.log('Выбранный цвет:', currentColor);
 });

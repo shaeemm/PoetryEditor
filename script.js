@@ -36,6 +36,17 @@ document.getElementById("toggleButton").addEventListener("click", () => {
   }
 });
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/service-worker.js")
+    .then((registration) => {
+      console.log("Service Worker успешно зарегистрирован:", registration);
+    })
+    .catch((error) => {
+      console.error("Ошибка при регистрации Service Worker:", error);
+    });
+}
+
 let IMG = new Image();
 IMG.src = "./images/image_poetry.png";
 

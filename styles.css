@@ -11,6 +11,9 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+}
+
+html {
   background: linear-gradient(45deg, #3f0043, #230058);
 }
 
@@ -30,11 +33,11 @@ canvas {
   background-color: #100028;
   color: #fff;
   transition: right 0.3s ease;
-  padding: 20px;
+  padding: 0px;
 }
 
 .sidebar .content {
-  padding: 20px;
+  padding: 0px;
 }
 
 #toggleButton {
@@ -59,16 +62,16 @@ canvas {
 .column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  gap: 0px;
+  padding: 0px;
 }
 
 .spacedColumn {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px;
-  margin-left: 20px;
+  padding: 0px;
+  margin-left: 30px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -78,6 +81,11 @@ canvas {
   src: url("./fonts/Seravek-Bold.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "Menlo-Regular";
+  src: url("./fonts/Menlo-Regular.ttf") format("truetype");
+}
+
 body {
-  font-family: Arial, "Seravek-Bold", sans-serif;
+  font-family: Arial, "Seravek-Bold", "Menlo-Regular", sans-serif;
 }

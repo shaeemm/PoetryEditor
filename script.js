@@ -6,10 +6,18 @@ const sliderScaleImage = document.getElementById("sliderScaleImage");
 const imageInput = document.getElementById("imageInput");
 const colorPicker = document.getElementById("colorPicker");
 const sliderHightGradient = document.getElementById("sliderHightGradient");
+const textAreaTitle = document.getElementById("textAreaTitle");
+const textAreaText = document.getElementById("textAreaText");
+const textAreaSign = document.getElementById("textAreaSign");
+const colorText = document.getElementById("colorText");
+const colorSign = document.getElementById("colorSign");
 
 const BASE_CANVAS_HIGHT = 1920;
 
-const H_LINE_TITLE = 800; //уровень названия
+const H_LINE_TITLE = 880; //уровень названия
+const W_LINE_TEXT = 110;
+const H_LINE_SIGN = -130; //уровень подписи (от низа)
+
 let H_GRAD = parseInt(sliderHightGradient.value); //размер градиента
 let RGB_GRAD = [0, 0, 0]; //цвет градиента
 
@@ -27,17 +35,24 @@ let Y_DOWN = 0;
 let X_BIMG = 0;
 let Y_BIMG = 0;
 
-document.getElementById("toggleButton").addEventListener("click", () => {
-  const sidebar = document.getElementById("sidebar");
-  if (sidebar.style.right === "0px") {
-    sidebar.style.right = "-250px";
-  } else {
-    sidebar.style.right = "0px";
-  }
-});
+let TEXT_TITLE = textAreaTitle.value;
+let TEXT_TEXT = textAreaText.value;
+let TEXT_SIGN = textAreaSign.value;
+
+let COLOR_TEXT = colorText.value;
+let COLOR_SIGN = colorSign.value;
 
 let IMG = new Image();
 IMG.src = "./images/image_poetry.png";
+
+let IMG_LIKE = new Image();
+IMG_LIKE.src = "./images/img-like-dislike.png";
+let SCALE_IMG_LIKE = 0.17;
+
+document.fonts.ready.then(() => {
+  //console.log("Шрифты загружены");
+  updateCanvas();
+});
 
 IMG.onload = () => {
   NAT_W_IMG = IMG.naturalWidth;
@@ -48,6 +63,10 @@ IMG.onload = () => {
   updateCanvas();
 };
 
+IMG_LIKE.onload = () => {
+  updateCanvas();
+};
+
 function clearCanvas(ctx) {
   ctx.fillStyle = "#4CAF50";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -55,66 +74,78 @@ function clearCanvas(ctx) {
 
 function updateCanvas() {
   clearCanvas(ctx);
+
   drawImage(ctx, IMG);
+
   drawGradient(ctx, [canvas.width, canvas.height], RGB_GRAD, H_GRAD);
 
-  drawTitle(
+  drawTitle(ctx, W_LINE_TEXT, H_LINE_TITLE - 90, 100, COLOR_TEXT, TEXT_TITLE);
+  drawText(ctx, W_LINE_TEXT, H_LINE_TITLE - 50, 55, COLOR_TEXT, TEXT_TEXT);
+
+  drawSign(
     ctx,
-    100,
-    H_LINE_TITLE - 100,
-    850,
-    100,
-    "white",
-    "Стыда нет, но есть сон"
+    W_LINE_TEXT,
+    canvas.height + H_LINE_SIGN,
+    55,
+    COLOR_SIGN,
+    TEXT_SIGN
   );
+  drawColoredIMG(
+    ctx,
+    canvas.width - 400,
+    canvas.height + H_LINE_SIGN - 90,
+    SCALE_IMG_LIKE,
+    COLOR_SIGN,
+    IMG_LIKE
+  ); /* */
 
   drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
 }
 
-function drawTitle(ctx, x, y, maxWidth, lineHeight, color, text) {
-  const words = text.split(" ");
-  let line1 = "";
-  let line2 = "";
-  let isLine1 = true;
-  let isEnd = false;
-  let startY = y;
+function drawColoredIMG(ctx, x, y, scale, color, img) {
+  const tempCanvas = document.createElement("canvas");
+  const tempCtx = tempCanvas.getContext("2d");
 
-  for (let i = 0; i < words.length; i++) {
-    if (!isEnd) {
-      if (isLine1) {
-        const testLine = line1 + words[i];
-        const testWidth = ctx.measureText(testLine).width;
-        console.log(`testLine = ${testLine}, i = ${i}`);
-        if (testWidth > maxWidth) {
-          isLine1 = false;
-          console.log(`line1 = ${line1}, i = ${i}, startY = ${startY}`);
-          i--;
-          startY -= lineHeight;
-          console.log(`line1 = ${line1}, i-- = ${i}, startY-- = ${startY}`);
-        } else {
-          line1 = testLine + " ";
-          console.log(`line1 = ${line1}, i = ${i}`);
-        }
-      } else {
-        const testLine = line2 + words[i];
-        const testWidth = ctx.measureText(testLine).width;
-        console.log(`testLine = ${testLine}, i = ${i}`);
-        if (testWidth > maxWidth) {
-          console.log(`line2 = ${line2}, i = ${i}, startY = ${startY}`);
-          isEnd = true;
-        } else {
-          line2 = testLine + " ";
-          console.log(`line2 = ${line2}, i = ${i}, startY = ${startY}`);
-        }
-      }
-    }
-  }
-  console.log(`isEnd = ${isEnd}`);
+  tempCanvas.width = img.width;
+  tempCanvas.height = img.height;
 
-  ctx.font = '120px "Seravek-Bold"';
+  tempCtx.drawImage(img, 0, 0);
+
+  tempCtx.globalCompositeOperation = "source-in";
+  tempCtx.fillStyle = color;
+  tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+  ctx.drawImage(tempCanvas, x, y, img.width * scale, img.height * scale);
+}
+
+function drawTitle(ctx, x, y, lineHeight, color, text) {
+  const lines = text.split("\n");
+  const len = lines.length;
+  ctx.font = '110px "Seravek-Bold"';
   ctx.fillStyle = color;
-  ctx.fillText(line1, x, startY);
-  if (!isLine1) ctx.fillText(line2, x, startY + lineHeight);
+  lines.forEach((line, index) => {
+    ctx.fillText(line, x, y + (index - len) * lineHeight);
+  });
+}
+
+function drawText(ctx, x, y, lineHeight, color, text) {
+  const lines = text.split("\n");
+
+  ctx.font = '40px "Menlo-Regular"';
+  ctx.fillStyle = color;
+  lines.forEach((line, index) => {
+    ctx.fillText(line, x, y + index * lineHeight);
+  });
+}
+
+function drawSign(ctx, x, y, lineHeight, color, text) {
+  const lines = text.split("\n");
+  const len = lines.length;
+  ctx.font = '40px "Seravek-Bold"';
+  ctx.fillStyle = color;
+  lines.forEach((line, index) => {
+    ctx.fillText(line, x, y + (index - len / 2) * lineHeight);
+  });
 }
 
 function drawImage(ctx, img) {
@@ -186,6 +217,15 @@ function hexToRgb(hex) {
   const b = bigint & 255;
   return { r, g, b };
 }
+
+document.getElementById("toggleButton").addEventListener("click", () => {
+  const sidebar = document.getElementById("sidebar");
+  if (sidebar.style.right === "0px") {
+    sidebar.style.right = "-250px";
+  } else {
+    sidebar.style.right = "0px";
+  }
+});
 
 // Обработчики событий
 canvas.addEventListener("mousemove", (event) => {
@@ -267,6 +307,10 @@ canvas.addEventListener("touchend", (event) => {
 
 sliderHightCanvas.addEventListener("input", (event) => {
   canvas.height = parseInt(event.target.value) + parseInt(BASE_CANVAS_HIGHT);
+  document.fonts.ready.then(() => {
+    //console.log("Шрифты загружены");
+    updateCanvas();
+  });
   updateCanvas();
 });
 
@@ -319,4 +363,29 @@ colorPicker.addEventListener("input", (event) => {
   RGB_GRAD = [rgb.r, rgb.g, rgb.b];
   updateCanvas();
   //console.log('Выбранный цвет:', currentColor);
+});
+
+textAreaTitle.addEventListener("input", () => {
+  TEXT_TITLE = textAreaTitle.value;
+  updateCanvas();
+});
+
+textAreaText.addEventListener("input", () => {
+  TEXT_TEXT = textAreaText.value;
+  updateCanvas();
+});
+
+textAreaSign.addEventListener("input", () => {
+  TEXT_SIGN = textAreaSign.value;
+  updateCanvas();
+});
+
+colorText.addEventListener("input", (event) => {
+  COLOR_TEXT = event.target.value;
+  updateCanvas();
+});
+
+colorSign.addEventListener("input", (event) => {
+  COLOR_SIGN = event.target.value;
+  updateCanvas();
 });

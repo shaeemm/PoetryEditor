@@ -17,6 +17,9 @@ self.addEventListener("install", (event) => {
         `${basePath}/images/icon-512x512.png`,
         `${basePath}/images/screenshot-wide.png`,
         `${basePath}/images/screenshot-mobile.png`,
+        `${basePath}/images/img-like-dislike.png`,
+        `${basePath}/fonts/Seravek-Bold.otf`,
+        `${basePath}/fonts/Menlo-Regular.ttf`,
       ]);
     })
   );

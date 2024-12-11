@@ -26,7 +26,7 @@
               value="0"
             />
           </div>
-          <div style="height: 20px"></div>
+          <div style="height: 10px"></div>
           <div>
             <label for="imageInput">Открыть изображение</label>
             <input type="file" id="imageInput" accept="image/*" />
@@ -42,7 +42,7 @@
               value="2.0"
             />
           </div>
-          <div style="height: 20px"></div>
+          <div style="height: 10px"></div>
           <div>
             <label for="colorPicker">Цвет заливки:</label>
             <input type="color" id="colorPicker" value="#000000" />
@@ -55,8 +55,60 @@
               min="10"
               max="1500"
               step="1"
-              value="250"
+              value="500"
             />
+          </div>
+          <div style="height: 10px"></div>
+          <div>
+            <label for="colorText">Цвет текста:</label>
+            <select id="colorText">
+              <option value="#ffffff" selected>Белый</option>
+              <option value="#000000">Чёрный</option>
+            </select>
+          </div>
+          <div>
+            <label for="colorSign">Цвет имени:</label>
+            <select id="colorSign">
+              <option value="#bababa">Светлый</option>
+              <option value="#808080" selected>Полутон</option>
+              <option value="#444444">Тёмный</option>
+            </select>
+          </div>
+          <div style="height: 10px"></div>
+          <div>
+            <label for="textAreaTitle">Название стихотворения:</label>
+            <textarea id="textAreaTitle" rows="2" cols="20">
+Оставь надежду, 
+всяк стоящий</textarea
+            >
+          </div>
+
+          <div>
+            <label for="textAreaText">Текст стихотворения:</label>
+            <textarea id="textAreaText" rows="10" cols="30">
+Перед тобой есть два пути,
+Пойдёшь лишь тем, что пожелаешь.
+Один: короткий и тернист,
+Второй: свободен и извилист.
+
+Но все пути ведут туда,
+Где неизведанная мыслью,
+Терра-инкогнито земля,
+Нам иногда в кошмарах снится.
+
+Презрев желания, мечты,
+Ступив на путь во тьму манящий,
+Перед вратами пустоты,
+Оставь надежду всяк стоящий.</textarea
+            >
+          </div>
+
+          <div>
+            <label for="textAreaSign">Имя/псевдоним:</label>
+            <textarea id="textAreaSign" rows="2" cols="15">
+МРАЧНЫЕ СТИХИ 
+(БЫЧКОВ ДМИТРИЙ)</textarea
+            >
           </div>
         </div>
       </div>

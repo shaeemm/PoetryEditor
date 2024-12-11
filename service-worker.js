@@ -8,6 +8,9 @@ self.addEventListener("install", (event) => {
         `${basePath}/styles.css`,
         `${basePath}/script.js`,
         `${basePath}/favicon.ico`,
+        `${basePath}/images/image_poetry.png`,
+        `${basePath}/images/icon-192x192.png`,
+        `${basePath}/images/icon-512x512.png`,
       ]);
     })
   );

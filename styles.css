@@ -72,3 +72,12 @@ canvas {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+@font-face {
+  font-family: "Seravek-Bold";
+  src: url("./fonts/Seravek-Bold.otf") format("opentype");
+}
+
+body {
+  font-family: Arial, "Seravek-Bold", sans-serif;
+}

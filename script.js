@@ -9,7 +9,7 @@ const sliderHightGradient = document.getElementById("sliderHightGradient");
 
 const BASE_CANVAS_HIGHT = 1920;
 
-const H_LINE_TITLE = 500; //уровень названия
+const H_LINE_TITLE = 800; //уровень названия
 let H_GRAD = parseInt(sliderHightGradient.value); //размер градиента
 let RGB_GRAD = [0, 0, 0]; //цвет градиента
 
@@ -36,19 +36,6 @@ document.getElementById("toggleButton").addEventListener("click", () => {
   }
 });
 
-/*
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/PoetryEditor/service-worker.js")
-    .then((registration) => {
-      console.log("Service Worker успешно зарегистрирован:", registration);
-    })
-    .catch((error) => {
-      console.error("Ошибка при регистрации Service Worker:", error);
-    });
-}
-*/
-
 let IMG = new Image();
 IMG.src = "./images/image_poetry.png";
 
@@ -70,7 +57,64 @@ function updateCanvas() {
   clearCanvas(ctx);
   drawImage(ctx, IMG);
   drawGradient(ctx, [canvas.width, canvas.height], RGB_GRAD, H_GRAD);
+
+  drawTitle(
+    ctx,
+    100,
+    H_LINE_TITLE - 100,
+    850,
+    100,
+    "white",
+    "Стыда нет, но есть сон"
+  );
+
   drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
+}
+
+function drawTitle(ctx, x, y, maxWidth, lineHeight, color, text) {
+  const words = text.split(" ");
+  let line1 = "";
+  let line2 = "";
+  let isLine1 = true;
+  let isEnd = false;
+  let startY = y;
+
+  for (let i = 0; i < words.length; i++) {
+    if (!isEnd) {
+      if (isLine1) {
+        const testLine = line1 + words[i];
+        const testWidth = ctx.measureText(testLine).width;
+        console.log(`testLine = ${testLine}, i = ${i}`);
+        if (testWidth > maxWidth) {
+          isLine1 = false;
+          console.log(`line1 = ${line1}, i = ${i}, startY = ${startY}`);
+          i--;
+          startY -= lineHeight;
+          console.log(`line1 = ${line1}, i-- = ${i}, startY-- = ${startY}`);
+        } else {
+          line1 = testLine + " ";
+          console.log(`line1 = ${line1}, i = ${i}`);
+        }
+      } else {
+        const testLine = line2 + words[i];
+        const testWidth = ctx.measureText(testLine).width;
+        console.log(`testLine = ${testLine}, i = ${i}`);
+        if (testWidth > maxWidth) {
+          console.log(`line2 = ${line2}, i = ${i}, startY = ${startY}`);
+          isEnd = true;
+        } else {
+          line2 = testLine + " ";
+          console.log(`line2 = ${line2}, i = ${i}, startY = ${startY}`);
+        }
+      }
+    }
+  }
+  console.log(`isEnd = ${isEnd}`);
+
+  ctx.font = '120px "Seravek-Bold"';
+  ctx.fillStyle = color;
+  ctx.fillText(line1, x, startY);
+  if (!isLine1) ctx.fillText(line2, x, startY + lineHeight);
 }
 
 function drawImage(ctx, img) {

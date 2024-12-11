@@ -1,7 +1,14 @@
 self.addEventListener("install", (event) => {
+  const basePath = self.location.pathname.replace(/\/[^/]*$/, "");
+
   event.waitUntil(
     caches.open("v1").then((cache) => {
-      return cache.addAll(["/", "/styles.css", "/script.js", "/favicon.ico"]);
+      return cache.addAll([
+        `${basePath}/`,
+        `${basePath}/styles.css`,
+        `${basePath}/script.js`,
+        `${basePath}/favicon.ico`,
+      ]);
     })
   );
 });

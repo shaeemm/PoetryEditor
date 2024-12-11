@@ -1,6 +1,10 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+const sliderHightCanvas = document.getElementById("sliderHightCanvas");
+
+const BASE_CANVAS_HIGHT = 1920;
+
 const H_LINE_TITLE = 500; //уровень названия
 let H_GRAD = 250; //размер градиента
 let RGB_GRAD = [50, 50, 50]; //цвет градиента
@@ -181,4 +185,9 @@ canvas.addEventListener("touchmove", (event) => {
 canvas.addEventListener("touchend", (event) => {
   IS_DRAG = false;
   console.log("Touch end");
+});
+
+sliderHightCanvas.addEventListener("input", (event) => {
+  canvas.height = parseInt(event.target.value) + parseInt(BASE_CANVAS_HIGHT);
+  updateCanvas();
 });

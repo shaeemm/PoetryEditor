@@ -18,8 +18,8 @@ body {
 
 /* Настраиваем канвас */
 canvas {
-  height: 100vh; /* Высота экрана */
-  width: auto; /* Пропорциональная ширина */
+  height: 80vh;
+  width: auto;
   display: block;
 }
 
@@ -63,4 +63,12 @@ canvas {
   flex-direction: column;
   gap: 10px;
   padding: 10px;
+}
+
+.spacedColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  margin-left: 50px;
 }

@@ -1,11 +1,9 @@
-/* Убираем все отступы */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Центрируем содержимое на странице */
 html,
 body {
   height: 100%;
@@ -16,7 +14,6 @@ body {
   background: linear-gradient(45deg, #3f0043, #230058);
 }
 
-/* Настраиваем канвас */
 canvas {
   height: 80vh;
   width: auto;
@@ -70,5 +67,5 @@ canvas {
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  margin-left: 50px;
+  margin-left: 40px;
 }

@@ -2,6 +2,8 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 const sliderHightCanvas = document.getElementById("sliderHightCanvas");
+const sliderScaleImage = document.getElementById("sliderScaleImage");
+const imageInput = document.getElementById("imageInput");
 
 const BASE_CANVAS_HIGHT = 1920;
 
@@ -9,10 +11,13 @@ const H_LINE_TITLE = 500; //уровень названия
 let H_GRAD = 250; //размер градиента
 let RGB_GRAD = [50, 50, 50]; //цвет градиента
 
-let X_IMG = 0;
-let Y_IMG = 0;
+let X_IMG = 28;
+let Y_IMG = 20;
+let NAT_H_IMG = 200;
+let NAT_W_IMG = 500;
 let H_IMG = 200;
 let W_IMG = 500;
+let SCALE_IMG = parseFloat(sliderScaleImage.value);
 
 let IS_DRAG = false;
 let X_DOWN = 0;
@@ -29,10 +34,15 @@ document.getElementById("toggleButton").addEventListener("click", () => {
   }
 });
 
-const img = new Image();
-img.src = "./images/image_poetry.png";
+let IMG = new Image();
+IMG.src = "./images/image_poetry.png";
 
-img.onload = () => {
+IMG.onload = () => {
+  NAT_W_IMG = IMG.naturalWidth;
+  NAT_H_IMG = IMG.naturalHeight;
+  W_IMG = NAT_W_IMG * SCALE_IMG;
+  H_IMG = NAT_H_IMG * SCALE_IMG;
+
   updateCanvas();
 };
 
@@ -43,7 +53,7 @@ function clearCanvas(ctx) {
 
 function updateCanvas() {
   clearCanvas(ctx);
-  drawImage(ctx, img);
+  drawImage(ctx, IMG);
   drawGradient(ctx, [canvas.width, canvas.height], RGB_GRAD, H_GRAD);
   drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
 }
@@ -189,5 +199,43 @@ canvas.addEventListener("touchend", (event) => {
 
 sliderHightCanvas.addEventListener("input", (event) => {
   canvas.height = parseInt(event.target.value) + parseInt(BASE_CANVAS_HIGHT);
+  updateCanvas();
+});
+
+sliderScaleImage.addEventListener("input", (event) => {
+  SCALE_IMG = parseFloat(event.target.value);
+  W_IMG = NAT_W_IMG * SCALE_IMG;
+  H_IMG = NAT_H_IMG * SCALE_IMG;
+  updateCanvas();
+});
+
+imageInput.addEventListener("change", (event) => {
+  const file = event.target.files[0];
+
+  if (file && file.type.startsWith("image/")) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const img = new Image();
+      img.src = e.target.result;
+
+      img.onload = () => {
+        IMG = img;
+        NAT_W_IMG = IMG.naturalWidth;
+        NAT_H_IMG = IMG.naturalHeight;
+        W_IMG = NAT_W_IMG * SCALE_IMG;
+        H_IMG = NAT_H_IMG * SCALE_IMG;
+        updateCanvas();
+      };
+
+      img.onerror = () => {
+        console.error("Ошибка при загрузке изображения");
+      };
+    };
+
+    reader.readAsDataURL(file); // Конвертируем файл в base64 строку
+  } else {
+    console.error("Выбран файл не является изображением");
+  }
   updateCanvas();
 });

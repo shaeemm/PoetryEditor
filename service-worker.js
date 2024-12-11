@@ -15,6 +15,8 @@ self.addEventListener("install", (event) => {
         `${basePath}/images/image_poetry.png`,
         `${basePath}/images/icon-192x192.png`,
         `${basePath}/images/icon-512x512.png`,
+        `${basePath}/images/screenshot-wide.png`,
+        `${basePath}/images/screenshot-mobile.png`,
       ]);
     })
   );

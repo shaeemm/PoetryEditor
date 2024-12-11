@@ -1,6 +1,6 @@
 self.addEventListener("install", (event) => {
   const basePath = self.location.pathname.replace(/\/[^/]*$/, "");
-
+  console.log(`basePath: ${basePath}`);
   event.waitUntil(
     caches.open("v1").then((cache) => {
       return cache.addAll([

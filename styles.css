@@ -1,3 +1,9 @@
+:root {
+  --main-color: #460096;
+  --first-grad-color: #3f0043;
+  --second-grad-color: #230058;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +20,11 @@ body {
 }
 
 html {
-  background: linear-gradient(45deg, #3f0043, #230058);
+  background: linear-gradient(
+    45deg,
+    var(--first-grad-color),
+    var(--second-grad-color)
+  );
 }
 
 canvas {
@@ -30,7 +40,7 @@ canvas {
   top: 0;
   width: 275px;
   height: 100%;
-  background-color: #460096;
+  background-color: var(--main-color);
   color: #fff;
   transition: right 0.3s ease;
   padding: 0px;
@@ -48,7 +58,32 @@ canvas {
   width: 25px;
   border: none;
   color: #fff;
-  background: #460096;
+  background: var(--main-color);
+}
+
+#downloadButton {
+  border-radius: 50%;
+  position: absolute;
+  left: 2%;
+  top: 92%;
+  height: 50px;
+  width: 50px;
+  border: none;
+  background: var(--main-color);
+  background-image: url("./images/icon-bt-dwnld.png");
+  background-size: 100%;
+}
+
+#downloadButton:hover {
+  background: var(--second-grad-color);
+  background-image: url("./images/icon-bt-dwnld.png");
+  background-size: 100%;
+}
+
+#downloadButton:active {
+  background: var(--first-grad-color);
+  background-image: url("./images/icon-bt-dwnld.png");
+  background-size: 100%;
 }
 
 .raw {

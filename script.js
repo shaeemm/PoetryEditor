@@ -11,6 +11,7 @@ const textAreaText = document.getElementById("textAreaText");
 const textAreaSign = document.getElementById("textAreaSign");
 const colorText = document.getElementById("colorText");
 const colorSign = document.getElementById("colorSign");
+const downloadButton = document.getElementById("downloadButton");
 
 const BASE_CANVAS_HIGHT = 1920;
 
@@ -100,6 +101,18 @@ function updateCanvas() {
   ); /* */
 
   drawRoundedRect(ctx, [canvas.width, canvas.height], 20, 25);
+}
+
+function downloadCanvas() {
+  var imageURL = canvas.toDataURL("image/png");
+
+  var link = document.createElement("a");
+  link.href = imageURL;
+  link.download = TEXT_TITLE + ".png";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 function drawColoredIMG(ctx, x, y, scale, color, img) {
@@ -225,6 +238,10 @@ document.getElementById("toggleButton").addEventListener("click", () => {
   } else {
     sidebar.style.right = "0px";
   }
+});
+
+downloadButton.addEventListener("click", () => {
+  downloadCanvas();
 });
 
 // Обработчики событий

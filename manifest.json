@@ -5,28 +5,28 @@
   "start_url": "/PoetryEditor/",
   "display": "standalone",
   "background_color": "#67006f",
-  "theme_color": "#ffffff",
+  "theme_color": "#460096",
   "icons": [
     {
-      "src": "/PoetryEditor/images/icon-192x192.png",
+      "src": "./images/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/PoetryEditor/images/icon-512x512.png",
+      "src": "./images/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "screenshots": [
     {
-      "src": "/PoetryEditor/images/screenshot-wide.png",
+      "src": "./images/screenshot-wide.png",
       "sizes": "1920x1080",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "/PoetryEditor/images/screenshot-mobile.png",
+      "src": "./images/screenshot-mobile.png",
       "sizes": "1080x1920",
       "type": "image/png"
     }

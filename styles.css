@@ -30,7 +30,7 @@ canvas {
   top: 0;
   width: 275px;
   height: 100%;
-  background-color: #100028;
+  background-color: #460096;
   color: #fff;
   transition: right 0.3s ease;
   padding: 0px;
@@ -48,7 +48,7 @@ canvas {
   width: 25px;
   border: none;
   color: #fff;
-  background: linear-gradient(90deg, #67006f, #100028);
+  background: #460096;
 }
 
 .raw {

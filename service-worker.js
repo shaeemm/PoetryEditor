@@ -18,6 +18,7 @@ self.addEventListener("install", (event) => {
         `${basePath}/images/screenshot-wide.png`,
         `${basePath}/images/screenshot-mobile.png`,
         `${basePath}/images/img-like-dislike.png`,
+        `${basePath}/images/icon-bt-dwnld.png`,
         `${basePath}/fonts/Seravek-Bold.otf`,
         `${basePath}/fonts/Menlo-Regular.ttf`,
       ]);

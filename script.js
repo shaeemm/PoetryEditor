@@ -21,8 +21,8 @@ const H_LINE_SIGN = -130; //уровень подписи (от низа)
 let H_GRAD = parseInt(sliderHightGradient.value); //размер градиента
 let RGB_GRAD = [0, 0, 0]; //цвет градиента
 
-let X_IMG = 28; //положение картинки
-let Y_IMG = 20; //положение картинки
+let X_IMG = 0; //положение картинки
+let Y_IMG = 0; //положение картинки
 let NAT_H_IMG = 200;
 let NAT_W_IMG = 500;
 let H_IMG = 200;
@@ -92,14 +92,14 @@ function updateCanvas() {
   );
   drawColoredIMG(
     ctx,
-    canvas.width - 400,
+    canvas.width - 380,
     canvas.height + H_LINE_SIGN - 90,
     SCALE_IMG_LIKE,
     COLOR_SIGN,
     IMG_LIKE
   ); /* */
 
-  drawRoundedRect(ctx, [canvas.width, canvas.height], 30, 30);
+  drawRoundedRect(ctx, [canvas.width, canvas.height], 20, 25);
 }
 
 function drawColoredIMG(ctx, x, y, scale, color, img) {

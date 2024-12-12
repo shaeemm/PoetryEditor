@@ -2,6 +2,7 @@
   "name": "PoetryEditor",
   "short_name": "PoetryEditor",
   "description": "Приложение для создания иллюстраций к стихам.",
+  "id": "./",
   "start_url": "/PoetryEditor/",
   "display": "standalone",
   "background_color": "#67006f",

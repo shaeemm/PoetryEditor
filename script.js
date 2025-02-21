@@ -123,30 +123,58 @@ function test(ctx, color) {
 }
 
 function downloadCanvas2() {
-  // Конвертируем canvas в Blob
+  console.log(`downloadCanvas2()`);
+
   test(ctx, "#000000");
   canvas.toBlob(function (blob) {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.onloadend = function () {
       test(ctx, "#000099");
+      console.log(`reader.onloadend`);
       const base64data = reader.result.split(",")[1];
 
       // Вызов метода VK Bridge
-      if (window.VK) {
+      if (window.vkBridge) {
         test(ctx, "#4CAF50");
-        VK.WebAppCallMethod(
-          "VKWebAppShowSaveFileDialog",
-          {
-            file_name: TEXT_TITLE + ".png",
-            file_extension: "png",
-            file_data: base64data,
-          },
-          function (response) {
-            console.log("Файл сохранён:", response);
-          }
-        );
+        console.log(`if (window.vkBridge) = true`);
+        vkBridge
+          .send("VKWebAppGetPlatform")
+          .then((platform) => {
+            console.log("vkBridge.send(VKWebAppGetPlatform) ==>");
+            if (platform === "mobile_android" || platform === "mobile_iphone") {
+              console.log("Код выполняется в мобильном клиенте ВКонтакте");
+              window.vkBridge
+                .send("VKWebAppShowSaveFileDialog", {
+                  file_name: TEXT_TITLE + ".png",
+                  file_extension: "png",
+                  file_data: base64data,
+                })
+                .then((response) => {
+                  console.log("Файл сохранён:", response);
+                  test(ctx, "#00FF00"); // Успешное сохранение
+                })
+                .catch((error) => {
+                  console.error("Ошибка при сохранении файла:", error);
+                  test(ctx, "#FF0000"); // Ошибка
+                });
+            } else {
+              console.log(
+                "Код выполняется в веб-версии ВКонтакте или браузере"
+              );
+              test(ctx, "#AF4C50");
+              const link = document.createElement("a");
+              link.download = TEXT_TITLE + ".png";
+              link.href = URL.createObjectURL(blob);
+              link.click();
+              URL.revokeObjectURL(link.href);
+            }
+          })
+          .catch((error) => {
+            console.error("Ошибка при определении платформы:", error);
+          });
       } else {
+        console.log(`if (window.vkBridge) = false`);
         test(ctx, "#AF4C50");
         const link = document.createElement("a");
         link.download = TEXT_TITLE + ".png";
@@ -284,7 +312,7 @@ document.getElementById("toggleButton").addEventListener("click", () => {
 });
 
 downloadButton.addEventListener("click", () => {
-  downloadCanvas2();
+  downloadCanvas();
 });
 
 // Обработчики событий

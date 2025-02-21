@@ -1,6 +1,9 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+const isVKAndroid = navigator.userAgent.includes("VKAndroidApp");
+console.log(`isVKAndroid = ${isVKAndroid}`);
+
 const sliderHightCanvas = document.getElementById("sliderHightCanvas");
 const sliderScaleImage = document.getElementById("sliderScaleImage");
 const imageInput = document.getElementById("imageInput");
@@ -113,6 +116,39 @@ function downloadCanvas() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+function downloadCanvas2() {
+  // Конвертируем canvas в Blob
+  canvas.toBlob(function (blob) {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+      const base64data = reader.result.split(",")[1];
+
+      // Вызов метода VK Bridge
+      if (isVKAndroid && window.VK) {
+        VK.WebAppCallMethod(
+          "VKWebAppShowSaveFileDialog",
+          {
+            file_name: TEXT_TITLE + ".png",
+            file_extension: "png",
+            file_data: base64data,
+          },
+          function (response) {
+            console.log("Файл сохранён:", response);
+          }
+        );
+      } else {
+        // Стандартное сохранение для других платформ
+        const link = document.createElement("a");
+        link.download = TEXT_TITLE + ".png";
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+    };
+  }, "image/png");
 }
 
 function drawColoredIMG(ctx, x, y, scale, color, img) {
@@ -241,7 +277,7 @@ document.getElementById("toggleButton").addEventListener("click", () => {
 });
 
 downloadButton.addEventListener("click", () => {
-  downloadCanvas();
+  downloadCanvas2();
 });
 
 // Обработчики событий

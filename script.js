@@ -1,9 +1,6 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-const isVKAndroid = navigator.userAgent.includes("VKAndroidApp");
-console.log(`isVKAndroid = ${isVKAndroid}`);
-
 const sliderHightCanvas = document.getElementById("sliderHightCanvas");
 const sliderScaleImage = document.getElementById("sliderScaleImage");
 const imageInput = document.getElementById("imageInput");
@@ -118,8 +115,14 @@ function downloadCanvas() {
   document.body.removeChild(link);
 }
 
+function test(ctx, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
 function downloadCanvas2() {
   // Конвертируем canvas в Blob
+
   canvas.toBlob(function (blob) {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
@@ -127,7 +130,8 @@ function downloadCanvas2() {
       const base64data = reader.result.split(",")[1];
 
       // Вызов метода VK Bridge
-      if (isVKAndroid && window.VK) {
+      if (window.VK) {
+        test(ctx, "#4CAF50");
         VK.WebAppCallMethod(
           "VKWebAppShowSaveFileDialog",
           {
@@ -140,7 +144,7 @@ function downloadCanvas2() {
           }
         );
       } else {
-        // Стандартное сохранение для других платформ
+        test(ctx, "#AF4C50");
         const link = document.createElement("a");
         link.download = TEXT_TITLE + ".png";
         link.href = URL.createObjectURL(blob);

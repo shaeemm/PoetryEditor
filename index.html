@@ -116,7 +116,7 @@
       </div>
     </div>
     <canvas id="myCanvas" width="1080" height="1920"></canvas>
-    <script src="script.js?v=1.0.1"></script>
+
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
@@ -132,11 +132,13 @@
     <script>
       function initBridge() {
         vkBridge.send("VKWebAppInit");
+        console.log(`initBridge()`);
       }
     </script>
     <script
       src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"
       onload="initBridge()"
     ></script>
+    <script src="script.js?v=1.0.2"></script>
   </body>
 </html>

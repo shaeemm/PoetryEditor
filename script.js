@@ -122,11 +122,12 @@ function test(ctx, color) {
 
 function downloadCanvas2() {
   // Конвертируем canvas в Blob
-
+  test(ctx, "#000000");
   canvas.toBlob(function (blob) {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.onloadend = function () {
+      test(ctx, "#000099");
       const base64data = reader.result.split(",")[1];
 
       // Вызов метода VK Bridge

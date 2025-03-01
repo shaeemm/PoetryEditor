@@ -105,16 +105,58 @@ function updateCanvas() {
   drawRoundedRect(ctx, [canvas.width, canvas.height], 20, 25);
 }
 
-function downloadCanvas() {
+function webDownload(name) {
   var imageURL = canvas.toDataURL("image/png");
 
   var link = document.createElement("a");
   link.href = imageURL;
-  link.download = TEXT_TITLE + ".png";
+  link.download = name;
 
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+function downloadCanvas() {
+  let download = false;
+  let nameImg = TEXT_TITLE + ".png";
+
+  vkBridge
+    .send("VKWebAppGetConfig")
+    .then((data) => {
+      console.log("получаем платформу");
+      console.log(data.app);
+
+      if (data.app === "vkclient" || data.app === "vkme") {
+        const imageBase64 = canvas.toDataURL("image/png");
+
+        vkBridge
+          .send("VKWebAppDownloadFile", {
+            url: imageBase64,
+            filename: nameImg,
+          })
+          .then((response) => {
+            console.log("Файл успешно скачан:", response);
+          })
+          .catch((error) => {
+            console.error("Ошибка при скачивании файла:", error);
+            alert(`Ошибка при скачивании файла: ${error}`);
+          });
+      } else {
+        if (!download) {
+          webDownload(nameImg);
+          download = true;
+        }
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  if (!download) {
+    webDownload(nameImg);
+    download = true;
+  }
 }
 
 function test(ctx, color) {

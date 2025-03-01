@@ -137,11 +137,11 @@ function downloadCanvas() {
           })
           .then((response) => {
             console.log("Файл успешно скачан:", response);
-            alert(`Файл успешно скачан.`);
+            //alert(`Файл успешно скачан.`);
           })
           .catch((error) => {
             console.error("Ошибка при скачивании файла:", error);
-            alert(`Ошибка при скачивании файла.`);
+            //alert(`Ошибка при скачивании файла.`);
           });
       } else {
         if (!download) {

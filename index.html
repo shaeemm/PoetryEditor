@@ -18,65 +18,7 @@
         </div>
 
         <div class="spacedColumn">
-          <div>
-            <label for="sliderHightCanvas">Добавить высоту: </label>
-            <input
-              type="range"
-              id="sliderHightCanvas"
-              min="0"
-              max="2000"
-              value="0"
-            />
-          </div>
-          <div style="height: 10px"></div>
-          <div>
-            <label for="imageInput">Открыть изображение</label>
-            <input type="file" id="imageInput" accept="image/*" />
-          </div>
-          <div>
-            <label for="sliderScaleImage">Масштаб изображения: </label>
-            <input
-              type="range"
-              id="sliderScaleImage"
-              min="0.01"
-              max="3"
-              step="0.01"
-              value="2.1"
-            />
-          </div>
-          <div style="height: 10px"></div>
-          <div>
-            <label for="colorPicker">Цвет заливки:</label>
-            <input type="color" id="colorPicker" value="#000000" />
-          </div>
-          <div>
-            <label for="sliderHightGradient">Размер градиента:</label>
-            <input
-              type="range"
-              id="sliderHightGradient"
-              min="10"
-              max="1500"
-              step="1"
-              value="500"
-            />
-          </div>
-          <div style="height: 10px"></div>
-          <div>
-            <label for="colorText">Цвет текста:</label>
-            <select id="colorText">
-              <option value="#ffffff" selected>Белый</option>
-              <option value="#000000">Чёрный</option>
-            </select>
-          </div>
-          <div>
-            <label for="colorSign">Цвет имени:</label>
-            <select id="colorSign">
-              <option value="#bababa">Светлый</option>
-              <option value="#808080" selected>Полутон</option>
-              <option value="#444444">Тёмный</option>
-            </select>
-          </div>
-          <div style="height: 10px"></div>
+          <!-- Основные текста -->
           <div>
             <label for="textAreaTitle">Название стихотворения:</label>
             <textarea id="textAreaTitle" rows="2" cols="30">
@@ -111,6 +53,67 @@
 МРАЧНЫЕ СТИХИ 
 (БЫЧКОВ ДМИТРИЙ)</textarea
             >
+          </div>
+          <!-- заливка, градиент и цвета -->
+          <div style="height: 10px"></div>
+          <div>
+            <label for="colorPicker">Цвет заливки:</label>
+            <input type="color" id="colorPicker" value="#000000" />
+          </div>
+          <div>
+            <label for="sliderHightGradient">Размер градиента:</label>
+            <input
+              type="range"
+              id="sliderHightGradient"
+              min="10"
+              max="1500"
+              step="1"
+              value="500"
+            />
+          </div>
+          <div style="height: 10px"></div>
+          <div>
+            <label for="colorText">Цвет текста:</label>
+            <select id="colorText">
+              <option value="#ffffff" selected>Белый</option>
+              <option value="#000000">Чёрный</option>
+            </select>
+          </div>
+          <div>
+            <label for="colorSign">Цвет имени:</label>
+            <select id="colorSign">
+              <option value="#bababa">Светлый</option>
+              <option value="#808080" selected>Полутон</option>
+              <option value="#444444">Тёмный</option>
+            </select>
+          </div>
+          <div style="height: 10px"></div>
+          <!-- Высота и иллюстрация -->
+          <div>
+            <label for="sliderHightCanvas">Добавить высоту: </label>
+            <input
+              type="range"
+              id="sliderHightCanvas"
+              min="0"
+              max="2000"
+              value="0"
+            />
+          </div>
+          <div style="height: 10px"></div>
+          <div>
+            <label for="imageInput">Открыть изображение</label>
+            <input type="file" id="imageInput" accept="image/*" />
+          </div>
+          <div>
+            <label for="sliderScaleImage">Масштаб изображения: </label>
+            <input
+              type="range"
+              id="sliderScaleImage"
+              min="0.01"
+              max="3"
+              step="0.01"
+              value="2.1"
+            />
           </div>
         </div>
       </div>

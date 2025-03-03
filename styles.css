@@ -111,6 +111,29 @@ canvas {
   overflow-y: auto;
 }
 
+.toast {
+  visibility: hidden; /* Скрыто по умолчанию */
+  min-width: 250px; /* Минимальная ширина */
+  margin-left: -125px; /* Центрирование */
+  background-color: #e0e0e0; /* Цвет фона */
+  color: #000000; /* Цвет текста */
+  text-align: center; /* Выравнивание текста */
+  border-radius: 5px; /* Закругленные углы */
+  padding: 16px; /* Отступы */
+  position: fixed; /* Фиксированная позиция */
+  z-index: 1000; /* Поверх других элементов */
+  left: 50%; /* Центрирование по горизонтали */
+  bottom: 30px; /* Отступ снизу */
+  font-size: 16px; /* Размер текста */
+  opacity: 0; /* Начальная прозрачность */
+  transition: opacity 0.5s, visibility 0.5s; /* Анимация */
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+
 @font-face {
   font-family: "Seravek-Bold";
   src: url("./fonts/Seravek-Bold.otf") format("opentype");

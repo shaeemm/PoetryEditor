@@ -153,15 +153,18 @@ function downloadCanvas() {
           .then((response) => {
             console.log("Файл успешно скачан:", response);
             //alert(`Файл успешно скачан.`);
+            showToast(`Иллюстрация сохранена.`, 3000);
           })
           .catch((error) => {
             console.error("Ошибка при скачивании файла:", error);
             //alert(`Ошибка при скачивании файла.`);
+            showToast(`Ошибка скачивания.`, 3000);
           });
       } else {
         if (!download) {
           webDownload(nameImg);
           download = true;
+          showToast(`Иллюстрация сохранена.`, 3000);
         }
       }
     })
@@ -172,6 +175,7 @@ function downloadCanvas() {
   if (!download) {
     webDownload(nameImg);
     download = true;
+    showToast(`Загрузка иллюстрации.`, 3000);
   }
 }
 
@@ -294,6 +298,16 @@ function hexToRgb(hex) {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
   return { r, g, b };
+}
+
+function showToast(message, duration = 3000) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, duration);
 }
 
 document.getElementById("toggleButton").addEventListener("click", () => {

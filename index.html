@@ -8,6 +8,7 @@
     <link rel="manifest" href="./manifest.json" />
     <title>PoetryEditor</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pickr.classic.min.css" />
   </head>
   <body>
     <button id="downloadButton"><p></p></button>
@@ -55,10 +56,10 @@
             >
           </div>
           <!-- заливка, градиент и цвета -->
-          <div style="height: 10px"></div>
+
           <div>
             <label for="colorPicker">Цвет заливки:</label>
-            <input type="color" id="colorPicker" value="#000000" />
+            <div id="colorPicker"></div>
           </div>
           <div>
             <label for="sliderHightGradient">Размер градиента:</label>
@@ -71,7 +72,7 @@
               value="500"
             />
           </div>
-          <div style="height: 10px"></div>
+
           <div>
             <label for="colorText">Цвет текста:</label>
             <select id="colorText">
@@ -87,7 +88,7 @@
               <option value="#444444">Тёмный</option>
             </select>
           </div>
-          <div style="height: 10px"></div>
+
           <!-- Высота и иллюстрация -->
           <div>
             <label for="sliderHightCanvas">Добавить высоту: </label>
@@ -99,7 +100,7 @@
               value="0"
             />
           </div>
-          <div style="height: 10px"></div>
+
           <div>
             <label for="imageInput">Открыть изображение</label>
             <input type="file" id="imageInput" accept="image/*" />
@@ -119,7 +120,7 @@
       </div>
     </div>
     <canvas id="myCanvas" width="1080" height="1920"></canvas>
-
+    <script src="pickr.min.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
@@ -142,6 +143,6 @@
       src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"
       onload="initBridge()"
     ></script>
-    <script src="script.js?v=1.0.8"></script>
+    <script src="script.js?v=1.0.9"></script>
   </body>
 </html>

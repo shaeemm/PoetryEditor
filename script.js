@@ -12,7 +12,7 @@ const pickr = Pickr.create({
   default: "#000000",
   components: {
     preview: true,
-    //opacity: true,
+    opacity: true,
     hue: true,
     interaction: {
       hex: true,
@@ -38,6 +38,7 @@ const H_LINE_SIGN = -130; //уровень подписи (от низа)
 
 let H_GRAD = parseInt(sliderHightGradient.value); //размер градиента
 let RGB_GRAD = [0, 0, 0]; //цвет градиента
+let OPACITY = 1.0; //прозрачность
 
 let X_IMG = 0; //положение картинки
 let Y_IMG = 0; //положение картинки
@@ -86,7 +87,7 @@ IMG_LIKE.onload = () => {
 };
 
 function clearCanvas(ctx) {
-  ctx.fillStyle = "#4CAF50";
+  ctx.fillStyle = "#000000"; //"#4CAF50"
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -95,7 +96,7 @@ function updateCanvas() {
 
   drawImage(ctx, IMG);
 
-  drawGradient(ctx, [canvas.width, canvas.height], RGB_GRAD, H_GRAD);
+  drawGradient(ctx, [canvas.width, canvas.height], RGB_GRAD, OPACITY, H_GRAD);
 
   drawTitle(ctx, W_LINE_TEXT, H_LINE_TITLE - 90, 100, COLOR_TEXT, TEXT_TITLE);
   drawText(ctx, W_LINE_TEXT, H_LINE_TITLE - 50, 55, COLOR_TEXT, TEXT_TEXT);
@@ -234,7 +235,7 @@ function drawImage(ctx, img) {
   ctx.drawImage(img, X_IMG, Y_IMG, W_IMG, H_IMG);
 }
 
-function drawGradient(ctx, canvSize, RGB, H) {
+function drawGradient(ctx, canvSize, RGB, opacity, H) {
   [R, G, B] = RGB;
   [width, height] = canvSize;
 
@@ -244,7 +245,7 @@ function drawGradient(ctx, canvSize, RGB, H) {
     0,
     H_LINE_TITLE - H
   );
-  gradient.addColorStop(0, `rgb(${R},${G},${B},1)`);
+  gradient.addColorStop(0, `rgb(${R},${G},${B},${opacity})`);
   gradient.addColorStop(1, `rgb(${R},${G},${B},0)`);
 
   ctx.fillStyle = gradient;
@@ -293,11 +294,24 @@ function getCoordinates(event) {
 
 function hexToRgb(hex) {
   hex = hex.replace("#", "");
-  const bigint = parseInt(hex, 16);
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
-  return { r, g, b };
+  if (hex.length === 8) {
+    // HEX с альфа-каналом (#RRGGBBAA)
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 24) & 255;
+    const g = (bigint >> 16) & 255;
+    const b = (bigint >> 8) & 255;
+    const a = (bigint & 255) / 255;
+    return { r, g, b, a };
+  } else if (hex.length === 6) {
+    // HEX без альфа-канала (#RRGGBB)
+    const bigint = parseInt(hex, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b, a: 1 };
+  } else {
+    throw new Error("Invalid HEX color format");
+  }
 }
 
 function showToast(message, duration = 3000) {
@@ -459,6 +473,7 @@ pickr.on("save", (color) => {
     console.log("Цвет выбран:", hexColor);
     let rgb = hexToRgb(hexColor);
     RGB_GRAD = [rgb.r, rgb.g, rgb.b];
+    OPACITY = rgb.a;
     updateCanvas();
   }
 });

@@ -27,7 +27,23 @@ const sliderHightGradient = document.getElementById("sliderHightGradient");
 const textAreaTitle = document.getElementById("textAreaTitle");
 const textAreaText = document.getElementById("textAreaText");
 const textAreaSign = document.getElementById("textAreaSign");
-const colorText = document.getElementById("colorText");
+
+const colorText = Pickr.create({
+  el: "#colorText",
+  theme: "classic", //"monolith"  //"nano"  //"classic"
+  default: "#FFFFFF",
+  components: {
+    preview: true,
+    opacity: true,
+    hue: true,
+    interaction: {
+      hex: true,
+      rgba: true,
+      input: true,
+      save: true,
+    },
+  },
+});
 const colorSign = document.getElementById("colorSign");
 const downloadButton = document.getElementById("downloadButton");
 
@@ -60,7 +76,7 @@ let TEXT_TITLE = textAreaTitle.value;
 let TEXT_TEXT = textAreaText.value;
 let TEXT_SIGN = textAreaSign.value;
 
-let COLOR_TEXT = colorText.value;
+let COLOR_TEXT = "#FFFFFF";
 let COLOR_SIGN = colorSign.value;
 
 let IMG = new Image();
@@ -504,9 +520,13 @@ textAreaSign.addEventListener("input", () => {
   updateCanvas();
 });
 
-colorText.addEventListener("input", (event) => {
-  COLOR_TEXT = event.target.value;
-  updateCanvas();
+colorText.on("save", (color) => {
+  if (color) {
+    const hexColor = color.toHEXA().toString();
+    console.log("Цвет выбран:", hexColor);
+    COLOR_TEXT = hexColor;
+    updateCanvas();
+  }
 });
 
 colorSign.addEventListener("input", (event) => {

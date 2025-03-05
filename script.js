@@ -4,6 +4,7 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 const sliderHightCanvas = document.getElementById("sliderHightCanvas");
+const sliderWidthCanvas = document.getElementById("sliderWidthCanvas");
 const sliderScaleImage = document.getElementById("sliderScaleImage");
 const imageInput = document.getElementById("imageInput");
 const pickr = Pickr.create({
@@ -31,6 +32,7 @@ const colorSign = document.getElementById("colorSign");
 const downloadButton = document.getElementById("downloadButton");
 
 const BASE_CANVAS_HIGHT = 1920;
+const BASE_CANVAS_WIDTH = 1080;
 
 const H_LINE_TITLE = 880; //уровень названия
 const W_LINE_TEXT = 110;
@@ -417,6 +419,15 @@ canvas.addEventListener("touchend", (event) => {
 
 sliderHightCanvas.addEventListener("input", (event) => {
   canvas.height = parseInt(event.target.value) + parseInt(BASE_CANVAS_HIGHT);
+  document.fonts.ready.then(() => {
+    //console.log("Шрифты загружены");
+    updateCanvas();
+  });
+  updateCanvas();
+});
+
+sliderWidthCanvas.addEventListener("input", (event) => {
+  canvas.width = parseInt(event.target.value) + parseInt(BASE_CANVAS_WIDTH);
   document.fonts.ready.then(() => {
     //console.log("Шрифты загружены");
     updateCanvas();

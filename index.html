@@ -102,6 +102,17 @@
           </div>
 
           <div>
+            <label for="sliderWidthCanvas">Добавить ширину: </label>
+            <input
+              type="range"
+              id="sliderWidthCanvas"
+              min="0"
+              max="500"
+              value="0"
+            />
+          </div>
+
+          <div>
             <label for="imageInput">Открыть изображение</label>
             <input type="file" id="imageInput" accept="image/*" />
           </div>
@@ -144,6 +155,6 @@
       src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"
       onload="initBridge()"
     ></script>
-    <script src="script.js?v=1.0.11"></script>
+    <script src="script.js?v=1.0.12"></script>
   </body>
 </html>

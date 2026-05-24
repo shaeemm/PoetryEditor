@@ -1,157 +1,1297 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="p:domain_verify" content="de80232cc08cc10207e04763fdf2f92f" />
-    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-    <link rel="manifest" href="./manifest.json" />
-    <title>PoetryEditor</title>
-    <link rel="stylesheet" href="styles.css?v=1.0.10" />
-    <link rel="stylesheet" href="pickr.classic.min.css" />
-  </head>
-  <body>
-    <button id="downloadButton"><p></p></button>
-    <div id="sidebar" class="sidebar">
-      <div class="raw">
-        <div class="column">
-          <button id="toggleButton"><p>&lt;</p></button>
-        </div>
+<!DOCTYPE html><img src="logo.png" style="width:120px;border-radius:20px;">
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>محرر الأشعار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-        <div class="spacedColumn">
-          <!-- Основные текста -->
-          <div>
-            <label for="textAreaTitle">Название стихотворения:</label>
-            <textarea id="textAreaTitle" rows="2" cols="30">
-Неизведанная
-неизбежность</textarea
-            >
-          </div>
+<body>
 
-          <div>
-            <label for="textAreaText">Текст стихотворения:</label>
-            <textarea id="textAreaText" rows="7" cols="30">
-Перед тобой есть два пути,
-Пойдёшь лишь тем, что пожелаешь.
-Один: короткий и тернист,
-Второй: свободен и извилист.
+<header>
+  <div id="clock"></div>
+  <h1>✒️ محرر وكتابة الأشعار</h1>
+</header>
 
-Но все пути ведут туда,
-Где неизведанная мыслью,
-Терра-инкогнито земля,
-Что иногда в кошмарах снится.
+<main>
 
-Презрев желания, мечты,
-Ступив на путь во тьму манящий,
-Перед вратами пустоты,
-Оставь надежду всяк стоящий.</textarea
-            >
-          </div>
+  <!-- الأدوات -->
+  <div class="toolbar">
+    <button onclick="newFile()">ملف جديد</button>
+    <button onclick="savePoem()">حفظ</button>
+    <button onclick="exportData()">تصدير</button>
+    <input type="file" onchange="importData(event)">
+  </div>
 
-          <div>
-            <label for="textAreaSign">Имя/псевдоним:</label>
-            <textarea id="textAreaSign" rows="2" cols="30">
-МРАЧНЫЕ СТИХИ 
-(БЫЧКОВ ДМИТРИЙ)</textarea
-            >
-          </div>
-          <!-- заливка, градиент и цвета -->
+  <!-- المحرر -->
+  <textarea id="editor" placeholder="اكتب شعرك هنا..."></textarea>
 
-          <div class="raw">
-            <label for="colorPicker">Цвет заливки:</label>
-            <div id="colorPicker"></div>
-          </div>
-          <div>
-            <label for="sliderHightGradient">Размер градиента:</label>
-            <input
-              type="range"
-              id="sliderHightGradient"
-              min="10"
-              max="1500"
-              step="1"
-              value="500"
-            />
-          </div>
+  <!-- المكتبة -->
+  <section>
+    <h2>📚 المكتبة</h2>
+    <div id="library"></div>
+  </section>
 
-          <div class="raw">
-            <label for="colorText">Цвет текста:</label>
-            <div id="colorText"></div>
-          </div>
-          <div>
-            <label for="colorSign">Цвет имени:</label>
-            <select id="colorSign">
-              <option value="#bababa">Светлый</option>
-              <option value="#808080" selected>Полутон</option>
-              <option value="#444444">Тёмный</option>
-            </select>
-          </div>
+</main>
 
-          <!-- Высота и иллюстрация -->
-          <div>
-            <label for="sliderHightCanvas">Добавить высоту: </label>
-            <input
-              type="range"
-              id="sliderHightCanvas"
-              min="0"
-              max="2000"
-              value="0"
-            />
-          </div>
+<footer>
+</footer>
 
-          <div>
-            <label for="sliderWidthCanvas">Добавить ширину: </label>
-            <input
-              type="range"
-              id="sliderWidthCanvas"
-              min="0"
-              max="500"
-              value="0"
-            />
-          </div>
+<script src="app.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>محرر الأشعار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-          <div>
-            <label for="imageInput">Открыть изображение</label>
-            <input type="file" id="imageInput" accept="image/*" />
-          </div>
-          <div>
-            <label for="sliderScaleImage">Масштаб изображения: </label>
-            <input
-              type="range"
-              id="sliderScaleImage"
-              min="0.01"
-              max="3"
-              step="0.01"
-              value="2.1"
-            />
-          </div>
-        </div>
+<body>
+
+<header>
+  <div id="clock"></div>
+  <h1>✒️ محرر وكتابة الأشعار</h1>
+</header>
+
+<main>
+
+  <!-- الأدوات -->
+  <div class="toolbar">
+    <button onclick="newFile()">ملف جديد</button>
+    <button onclick="savePoem()">حفظ</button>
+    <button onclick="exportData()">تصدير</button>
+    <input type="file" onchange="importData(event)">
+  </div>
+
+  <!-- المحرر -->
+  <textarea id="editor" placeholder="اكتب شعرك هنا..."></textarea>
+
+  <!-- المكتبة -->
+  <section>
+    <h2>📚 المكتبة</h2>
+    <div id="library"></div>
+  </section>
+
+</main>
+
+<footer>
+  
+
+<script src="app.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>محرر الأشعار المتكامل</title>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<header class="topbar">
+  <h1>✒️ محرر الأشعار المتكامل</h1>
+  <div id="clock"></div>
+</header>
+
+<main>
+
+  <section class="toolbar">
+    <button onclick="Core.newFile()">جديد</button>
+    <button onclick="Core.save()">حفظ</button>
+    <button onclick="Core.export()">تصدير</button>
+  </section>
+
+  <section class="editor-area">
+    <textarea id="editor" placeholder="اكتب شعرك هنا..."></textarea>
+  </section>
+
+  <section class="library">
+    <h2>📚 المكتبة</h2>
+    <div id="list"></div>
+  </se
+</footer>
+
+<script src="js/core.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/features.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/admin.js"></script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>PoetryEditor Pro</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+  <h1>✒️ PoetryEditor Pro</h1>
+  <div id="clock"></div>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="buttons">
+  <button onclick="Editor.save()">حفظ</button>
+  <button onclick="Editor.new()">جديد</button>
+</div>
+
+<div id="library"></div>
+
+<footer>
+  
+</footer>
+
+<script src="js/core.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/library.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/utils.js"></script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoetryEditor Pro</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Tahoma;
+  background:#0f172a;
+  color:white;
+}
+
+header{
+  text-align:center;
+  padding:10px;
+  background:#111827;
+}
+
+#clock{
+  color:#22d3ee;
+  font-size:13px;
+}
+
+textarea{
+  width:90%;
+  height:200px;
+  margin:10px auto;
+  display:block;
+  padding:10px;
+  font-size:18px;
+  border-radius:10px;
+  border:none;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px;
+}
+
+button{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#library{
+  width:90%;
+  margin:auto;
+  background:rgba(255,255,255,0.05);
+  padding:10px;
+  border-radius:10px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,0.08);
+  padding:8px;
+  margin:5px 0;
+  border-radius:8px;
+}
+
+footer{
+  text-align:center;
+  color:red;
+  padding:10px;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>✒️ PoetryEditor Pro</h2>
+  <div id="clock"></div>
+</header>
+
+<textarea id="editor" placeholder="اكتب شعرك هنا..."></textarea>
+
+<div class="buttons">
+  <button onclick="newPoem()">جديد</button>
+  <button onclick="savePoem()">حفظ</button>
+  <button onclick="copyText()">نسخ</button>
+</div>
+
+<div id="library"></div>
+
+<footer>
+  إعداد المهندس شايم الرشيدي © 2026
+</footer>
+
+<script>
+let poems = JSON.parse(localStorage.getItem("poems")) || [];
+let editIndex = null;
+
+/* ⏰ الوقت المباشر */
+setInterval(()=>{
+  document.getElementById("clock").innerText =
+  new Date().toLocaleString();
+},1000);
+
+/* 💾 حفظ */
+function savePoem(){
+  let text = document.getElementById("editor").value;
+  if(!text.trim()) return alert("اكتب شيئاً أولاً");
+
+  if(editIndex !== null){
+    poems[editIndex] = text;
+  }else{
+    poems.push(text);
+  }
+
+  localStorage.setItem("poems", JSON.stringify(poems));
+  render();
+  document.getElementById("editor").value = "";
+  editIndex = null;
+}
+
+/* 📚 عرض المكتبة */
+function render(){
+  let box = document.getElementById("library");
+  box.innerHTML = "";
+
+  poems.forEach((p,i)=>{
+    let div = document.createElement("div");
+    div.className="item";
+
+    div.innerHTML = `
+      <span onclick="openPoem(${i})">${p.slice(0,25)}...</span>
+      <div>
+        <button onclick="deletePoem(${i})">حذف</button>
       </div>
-    </div>
-    <canvas id="myCanvas" width="1080" height="1920"></canvas>
-    <div id="toast" class="toast"></div>
-    <script src="pickr.min.js"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/PoetryEditor/service-worker.js")
-          .then((registration) => {
-            console.log("Service Worker зарегистрирован:", registration);
-          })
-          .catch((error) => {
-            console.error("Ошибка при регистрации Service Worker:", error);
-          });
-      }
-    </script>
-    <script>
-      function initBridge() {
-        vkBridge.send("VKWebAppInit");
-        console.log(`initBridge()`);
-      }
-    </script>
-    <script
-      src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"
-      onload="initBridge()"
-    ></script>
-    <script src="script.js?v=1.0.14"></script>
-  </body>
-</html>
+    `;
+
+    box.appendChild(div);
+  });
+}
+
+/* 📂 فتح */
+function openPoem(i){
+  document.getElementById("editor").value = poems[i];
+  editIndex = i;
+}
+
+/* 🗑 حذف */
+function deletePoem(i){
+  poems.splice(i,1);
+  localStorage.setItem("poems", JSON.stringify(poems));
+  render();
+}
+
+/* 🆕 جديد */
+function newPoem(){
+  document.getElementById("editor").value = "";
+  editIndex = null;
+}
+
+/* 📋 نسخ */
+function copyText(){
+  let text = document.getElementById("editor").value;
+  navigator.clipboard.writeText(text);
+  alert("تم النسخ");
+}
+
+/* تشغيل */
+render();
+</script>
+
+</body>
+</html><div class="audio-box">
+  <h3>🎙️ التسجيل الصوتي</h3>
+
+  <button onclick="startRecord()">تسجيل</button>
+  <button onclick="stopRecord()">إيقاف</button>
+
+  <audio id="player" controls></audio>
+
+  <h4>📁 المكتبة الصوتية</h4>
+  <div id="audioLibrary"></div>
+</div><div class="ai-box">
+  <h3>🤖 الذكاء الصناعي</h3>
+
+  <button onclick="improvePoem()">تحسين النص</button>
+  <button onclick="suggestRhyme()">اقتراح قافية</button>
+
+  <div id="aiResult"></div>
+</div><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoetryEditor Pro AI</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Tahoma;
+  background:url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee") center/cover fixed;
+  color:white;
+}
+
+.overlay{
+  background:rgba(0,0,0,0.6);
+  min-height:100vh;
+  padding:10px;
+}
+
+header{
+  text-align:center;
+  padding:10px;
+  font-size:18px;
+}
+
+textarea{
+  width:95%;
+  height:180px;
+  display:block;
+  margin:10px auto;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+}
+
+button{
+  padding:8px 10px;
+  margin:3px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.box{
+  width:95%;
+  margin:10px auto;
+  background:rgba(255,255,255,0.1);
+  padding:10px;
+  border-radius:10px;
+}
+
+.item{
+  background:rgba(255,255,255,0.1);
+  margin:5px 0;
+  padding:5px;
+  border-radius:8px;
+}
+
+footer{
+  text-align:center;
+  color:red;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<header>
+  ✒️ PoetryEditor Pro AI
+  <div id="clock"></div>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="box">
+<button onclick="savePoem()">حفظ</button>
+<button onclick="newPoem()">جديد</button>
+<button onclick="copyText()">نسخ</button>
+</div>
+
+<div class="box">
+<h3>🤖 الذكاء الاصطناعي</h3>
+<button onclick="aiImprove()">تحسين النص</button>
+<button onclick="aiRhyme()">قافية</button>
+<div id="ai"></div>
+</div>
+
+<div class="box">
+<h3>📚 المكتبة النصية</h3>
+<div id="library"></div>
+</div>
+
+<div class="box">
+<h3>🎙️ تسجيل صوت</h3>
+<button onclick="startRec()">تسجيل</button>
+<button onclick="stopRec()">إيقاف</button>
+<div id="audioList"></div>
+</div>
+
+<footer>
+
+</footer>
+
+</div>
+
+<script>
+let poems = JSON.parse(localStorage.getItem("poems")) || [];
+let audios = JSON.parse(localStorage.getItem("audios")) || [];
+let edit = null;
+let recorder;
+let chunks = [];
+
+/* ⏰ الساعة */
+setInterval(()=>{
+  document.getElementById("clock").innerText =
+  new Date().toLocaleString();
+},1000);
+
+/* 💾 حفظ النص */
+function savePoem(){
+  let t = document.getElementById("editor").value;
+  if(!t.trim()) return;
+
+  if(edit !== null){
+    poems[edit] = t;
+  }else{
+    poems.push(t);
+  }
+
+  localStorage.setItem("poems",JSON.stringify(poems));
+  render();
+  document.getElementById("editor").value="";
+  edit=null;
+}
+
+/* 📚 عرض */
+function render(){
+  let box=document.getElementById("library");
+  box.innerHTML="";
+
+  poems.forEach((p,i)=>{
+    let d=document.createElement("div");
+    d.className="item";
+
+    d.innerHTML=`
+      <span onclick="openP(${i})">${p.slice(0,25)}...</span>
+      <button onclick="delP(${i})">حذف</button>
+    `;
+
+    box.appendChild(d);
+  });
+
+  renderAudio();
+}
+
+/* 📂 فتح */
+function openP(i){
+  document.getElementById("editor").value=poems[i];
+  edit=i;
+}
+
+/* 🗑 حذف */
+function delP(i){
+  poems.splice(i,1);
+  localStorage.setItem("poems",JSON.stringify(poems));
+  render();
+}
+
+/* 🆕 جديد */
+function newPoem(){
+  document.getElementById("editor").value="";
+  edit=null;
+}
+
+/* 📋 نسخ */
+function copyText(){
+  navigator.clipboard.writeText(
+    document.getElementById("editor").value
+  );
+  alert("تم النسخ");
+}
+
+/* 🤖 AI */
+function aiImprove(){
+  let t=document.getElementById("editor").value;
+  document.getElementById("ai").innerText=
+  "✨ " + t.replace(/حب/g,"عشق").replace(/انا/g,"أنا");
+}
+
+function aiRhyme(){
+  document.getElementById("ai").innerText=
+  "قوافي: قلب - حب - درب - صبر - نور";
+}
+
+/* 🎙️ تسجيل صوت */
+async function startRec(){
+  let stream = await navigator.mediaDevices.getUserMedia({audio:true});
+  recorder = new MediaRecorder(stream);
+  recorder.start();
+  chunks=[];
+  recorder.ondataavailable=e=>chunks.push(e.data);
+  alert("بدأ التسجيل");
+}
+
+function stopRec(){
+  recorder.stop();
+  recorder.onstop=()=>{
+    let blob=new Blob(chunks,{type:"audio/webm"});
+    let url=URL.createObjectURL(blob);
+
+    audios.push(url);
+    localStorage.setItem("audios",JSON.stringify(audios));
+    renderAudio();
+  };
+}
+
+/* 🎧 مكتبة الصوت */
+function renderAudio(){
+  let box=document.getElementById("audioList");
+  box.innerHTML="";
+
+  audios.forEach((a,i)=>{
+    box.innerHTML+=`
+      <div class="item">
+        <audio src="${a}" controls></audio>
+        <button onclick="delA(${i})">حذف</button>
+      </div>
+    `;
+  });
+}
+
+function delA(i){
+  audios.splice(i,1);
+  localStorage.setItem("audios",JSON.stringify(audios));
+  renderAudio();
+}
+
+render();
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PoetryEditor Pro</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+<header>
+  ✒️ PoetryEditor Pro
+  <div id="clock"></div>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="buttons">
+  <button onclick="save()">حفظ</button>
+  <button onclick="newFile()">جديد</button>
+</div>
+
+<div id="library"></div>
+
+<footer>
+
+</footer>
+
+<script src="js/app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoetryEditor Pro</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<header>
+  ✒️ PoetryEditor Pro
+  <div id="clock"></div>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="buttons">
+  <button onclick="save()">حفظ</button>
+  <button onclick="newFile()">جديد</button>
+  <button onclick="startRec()">تسجيل صوت</button>
+  <button onclick="stopRec()">إيقاف</button>
+</div>
+
+<div class="box">
+  <h3>🤖 AI</h3>
+  <button onclick="aiImprove()">تحسين</button>
+  <button onclick="aiRhymes()">قوافي</button>
+  <div id="ai"></div>
+</div>
+
+<div id="library"></div>
+<div id="audio"></div>
+
+<footer>
+
+</footer>
+
+<script src="js/app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PoetryEditor Pro AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<header>
+  ✒️ PoetryEditor Pro AI
+  <div id="clock"></div>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="buttons">
+  <button onclick="save()">حفظ</button>
+  <button onclick="newFile()">جديد</button>
+  <button onclick="copyText()">نسخ</button>
+  <button onclick="backup()">نسخ احتياطي</button>
+  <button onclick="restore()">استرجاع</button>
+</div>
+
+<div class="box">
+  <h3>🤖 AI الشاعر</h3>
+  <button onclick="aiImprove()">تحسين</button>
+  <button onclick="aiComplete()">إكمال</button>
+  <button onclick="aiRhymes()">قوافي</button>
+  <div id="ai"></div>
+</div>
+
+<div class="box">
+  <h3>🎙️ التسجيل الصوتي</h3>
+  <button onclick="startRec()">تسجيل</button>
+  <button onclick="stopRec()">إيقاف</button>
+  <div id="audioBox"></div>
+</div>
+
+<div id="library"></div>
+
+<footer>
+</footer>
+
+<script src="js/app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PoetryEditor Ultra AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<header>
+  ✒️ Ultra AI Poetry Editor
+  <button onclick="login()">تسجيل الدخول</button>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="buttons">
+  <button onclick="saveCloud()">حفظ سحابي</button>
+  <button onclick="loadCloud()">تحميل</button>
+  <button onclick="aiImprove()">AI تحسين</button>
+  <button onclick="aiComplete()">AI إكمال</button>
+</div>
+
+<div id="aiBox"></div>
+<div id="list"></div>
+
+<footer>
+
+</footer>
+
+<script type="module" src="js/app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PoetryEditor Pro AI</title>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<header>
+  ✒️ PoetryEditor Pro AI
+  <button onclick="login()">تسجيل دخول</button>
+</header>
+
+<textarea id="editor"></textarea>
+
+<div class="bar">
+  <button onclick="savePoem()">حفظ</button>
+  <button onclick="loadCloud()">سحابي</button>
+  <button onclick="aiImprove()">AI تحسين</button>
+  <button onclick="subscribe()">ترقية</button>
+</div>
+
+<div id="aiBox"></div>
+<div id="list"></div>
+
+<footer>
+</footer>
+
+<script type="module" src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>الاشتراكات</title>
+
+<link rel="stylesheet" href="pricing.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💎 خطط الاشتراك</h1>
+<p>اختر الخطة المناسبة لك</p>
+
+<div class="plans">
+
+  <div class="card">
+    <h2>Free</h2>
+    <p>مجاني</p>
+    <ul>
+      <li>✍️ كتابة الشعر</li>
+      <li>💾 حفظ محلي</li>
+    </ul>
+    <button onclick="selectPlan('free')">ابدأ مجاناً</button>
+  </div>
+
+  <div class="card premium">
+    <h2>Pro</h2>
+    <p>$5 / شهرياً</p>
+    <ul>
+      <li>🤖 AI شعر</li>
+      <li>☁️ حفظ سحابي</li>
+      <li>🎙️ صوتيات</li>
+    </ul>
+    <button onclick="subscribe('pro')">ترقية إلى Pro</button>
+  </div>
+
+  <div class="card premium">
+    <h2>Premium</h2>
+    <p>$10 / شهرياً</p>
+    <ul>
+      <li>🔥 AI متقدم</li>
+      <li>🛠️ لوحة Admin</li>
+      <li>🚀 ميزات كاملة</li>
+    </ul>
+    <button onclick="subscribe('premium')">ترقية Premium</button>
+  </div>
+
+</div>
+
+</div>
+
+<script src="pricing.js"></script>
+
+</body>
+</html><button onclick="location.href='pricing.html'">
+💎 الاشتراكات
+</button><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة المستخدم</title>
+
+<link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<header>
+  👤 لوحة المستخدم
+  <button onclick="logout()">تسجيل خروج</button>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>📊 حالة الاشتراك</h2>
+    <div id="plan">تحميل...</div>
+  </div>
+
+  <div class="card">
+    <h2>✍️ قصائدي</h2>
+    <div id="poems"></div>
+  </div>
+
+  <div class="card">
+    <h2>💎 الترقية</h2>
+    <button onclick="goPricing()">عرض الخطط</button>
+  </div>
+
+</div>
+
+<footer>
+
+</footer>
+
+<script type="module" src="dashboard.js"></script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PoetryEditor Pro AI</title>
+
+<link rel="stylesheet" href="landing.css">
+</head>
+
+<body>
+
+<header>
+  ✨ PoetryEditor Pro AI
+  <button onclick="goLogin()">تسجيل الدخول</button>
+</header>
+
+<section class="hero">
+  <h1>اكتب الشعر باحتراف + ذكاء صناعي</h1>
+  <p>منصة كتابة الشعر + AI + حفظ سحابي + تطبيق موبايل</p>
+  <button onclick="scrollToPlans()">ابدأ الآن</button>
+</section>
+
+<section class="features">
+  <div>🤖 ذكاء صناعي للشعر العربي</div>
+  <div>💾 حفظ سحابي</div>
+  <div>📱 تطبيق Android + iOS</div>
+  <div>💳 اشتراك شهري</div>
+</section>
+
+<section id="plans" class="plans">
+
+  <div class="card">
+    <h2>Free</h2>
+    <p>مجاني</p>
+    <ul>
+      <li>كتابة شعر</li>
+      <li>حفظ محلي</li>
+    </ul>
+    <button onclick="startFree()">ابدأ مجاناً</button>
+  </div>
+
+  <div class="card premium">
+    <h2>Pro</h2>
+    <p>$5 / شهر</p>
+    <ul>
+      <li>AI شعر</li>
+      <li>حفظ سحابي</li>
+      <li>صوتيات</li>
+    </ul>
+    <button onclick="subscribe('pro')">اشترك Pro</button>
+  </div>
+
+  <div class="card premium">
+    <h2>Premium</h2>
+    <p>$10 / شهر</p>
+    <ul>
+      <li>AI متقدم</li>
+      <li>لوحة إدارة</li>
+      <li>كل الميزات</li>
+    </ul>
+    <button onclick="subscribe('premium')">اشترك Premium</button>
+  </div>
+
+</section>
+
+<footer>
+
+</footer>
+
+<script src="landing.js"></script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoetryEditor Starter</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Tahoma;
+  background:#0b0f1a;
+  color:white;
+}
+
+header{
+  padding:15px;
+  background:#11182a;
+  display:flex;
+  justify-content:space-between;
+}
+
+textarea{
+  width:90%;
+  height:150px;
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+}
+
+button{
+  padding:10px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.card{
+  background:#1a2238;
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header><script type="module">
+
+// =========================
+// 🔥 Firebase (ضع بياناتك هنا)
+// =========================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "PUT_KEY",
+  authDomain: "PUT_DOMAIN",
+  projectId: "PUT_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// =========================
+// 👤 عناصر الصفحة
+// =========================
+const editor = document.createElement("textarea");
+document.body.appendChild(editor);
+
+const btnSave = document.createElement("button");
+btnSave.innerText = "💾 حفظ";
+document.body.appendChild(btnSave);
+
+const btnLogin = document.createElement("button");
+btnLogin.innerText = "🔑 تسجيل دخول";
+document.body.appendChild(btnLogin);
+
+const list = document.createElement("div");
+document.body.appendChild(list);
+
+// =========================
+// 🔑 تسجيل الدخول
+// =========================
+btnLogin.onclick = async () => {
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(auth, provider);
+  alert("تم تسجيل الدخول");
+  loadPoems();
+};
+
+// =========================
+// 💾 حفظ شعر
+// =========================
+btnSave.onclick = async () => {
+  const user = auth.currentUser;
+  if (!user) return alert("سجل دخول أولاً");
+
+  await addDoc(collection(db, "poems"), {
+    text: editor.value,
+    uid: user.uid,
+    time: Date.now()
+  });
+
+  editor.value = "";
+  loadPoems();
+};
+
+// =========================
+// 📚 تحميل القصائد
+// =========================
+async function loadPoems(){
+  list.innerHTML = "<h3>📚 مكتبتك</h3>";
+
+  const snap = await getDocs(collection(db, "poems"));
+
+  snap.forEach(doc => {
+    const data = doc.data();
+
+    if(data.uid === auth.currentUser?.uid){
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerText = data.text;
+      list.appendChild(div);
+    }
+  });
+}
+
+// =========================
+// 👀 مراقبة تسجيل الدخول
+// =========================
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    loadPoems();
+  }
+});
+
+</script><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PoetryEditor AI</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#0a0f1f;
+  color:white;
+}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#111a33;
+}
+
+.container{
+  padding:20px;
+}
+
+textarea{
+  width:100%;
+  height:200px;
+  border-radius:12px;
+  padding:15px;
+  font-size:16px;
+}
+
+.btn{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  margin:5px;
+  cursor:pointer;
+}
+
+.primary{ background:#4f46e5; color:white; }
+.gold{ background:gold; color:black; }
+
+.card{
+  background:#1a2238;
+  padding:15px;
+  border-radius:12px;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+  <div>✨ PoetryEditor AI</div>
+  <div>
+    <button onclick="goDashboard()">👤</button>
+    <button onclick="goPricing()">💎</button>
+  </div>
+</div>
+
+<div class="container">
+
+<textarea id="editor" placeholder="اكتب شعرك هنا..."></textarea>
+
+<br>
+
+<button class="btn primary" onclick="save()">💾 حفظ</button>
+<button class="btn gold" onclick="ai()">🤖 تحسين AI</button>
+
+<div id="list"></div>
+
+</div>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html><section style="text-align:center;padding:40px;">
+  <h1>اكتب الشعر بالذكاء الاصطناعي</h1>
+  <p>منصة عالمية لصناعة الشعر العربي الاحترافي</p>
+
+  <button onclick="location.href='pricing.html'" 
+  style="padding:15px;background:gold;border:none;border-radius:10px;">
+  ابدأ الآن
+  </button>
+</section><section style="text-align:center;padding:60px;background:#0b0f1a;color:white;">
+  <h1>✨ PoetryEditor AI</h1>
+  <p>اكتب الشعر العربي باحتراف باستخدام الذكاء الاصطناعي</p>
+
+  <button onclick="location.href='pricing.html'"
+    style="padding:15px 25px;background:gold;border:none;border-radius:12px;">
+    🚀 ابدأ الآن
+  </button>
+</section><section style="text-align:center;padding:70px;background:#0b0f1a;color:white;">
+  <h1>✨ PoetryEditor AI</h1>
+
+  <p style="font-size:18px;">
+    اكتب الشعر العربي باستخدام الذكاء الاصطناعي
+  </p>
+
+  <button style="padding:15px 25px;background:gold;border:none;border-radius:10px;">
+    🚀 جرّبه الآن
+  </button>
+
+  <p style="margin-top:20px;opacity:0.7;">
+    مناسب للشعراء وصناع المحتوى
+  </p>
+</section><link rel="icon" href="logo.png">
+  ✒️ PoetryEditor
